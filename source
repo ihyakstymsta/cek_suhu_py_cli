@@ -1,0 +1,45 @@
+# cek_suhu.py
+
+import os
+
+# Fungsi untuk mengevaluasi suhu
+def evaluasi_suhu(suhu):
+    if suhu > 30:
+        return "Panas"
+    elif suhu >= 20:
+        return "Sejuk"
+    else:
+        return "Dingin"
+
+# Fungsi untuk membersihkan layar (cross-platform)
+def bersihkan_layar():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+# Program utama
+def main():
+    while True:
+        try:
+            suhu = int(input("Masukkan suhu (°C): "))
+            hasil = evaluasi_suhu(suhu)
+            print(f"Suhu {suhu}°C termasuk: {hasil}")
+        except ValueError:
+            print("⚠️ Input tidak valid! Masukkan angka bulat.")
+
+        # Konfirmasi pengulangan
+        print("\nApakah Anda ingin:")
+        print("1. Mengecek suhu lagi")
+        print("2. Keluar dari aplikasi")
+        pilihan = input("Masukkan pilihan (1/2): ")
+
+        if pilihan == "2":
+            print("Terima kasih! Aplikasi selesai.")
+            break
+        elif pilihan == "1":
+            bersihkan_layar()
+        else:
+            print("Pilihan tidak dikenali, aplikasi tetap dilanjutkan...\n")
+            bersihkan_layar()
+
+# Menjalankan program
+if __name__ == "__main__":
+    main()
