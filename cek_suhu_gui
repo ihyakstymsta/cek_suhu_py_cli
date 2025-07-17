@@ -1,0 +1,65 @@
+import tkinter as tk
+from tkinter import messagebox
+
+# Fungsi untuk mengevaluasi suhu
+def evaluasi_suhu(suhu):
+    if suhu > 30:
+        return "Panas"
+    elif suhu >= 20:
+        return "Sejuk"
+    else:
+        return "Dingin"
+
+# Fungsi ketika tombol "Cek Suhu" ditekan
+def cek_suhu():
+    try:
+        suhu = int(entry_suhu.get())
+        hasil = evaluasi_suhu(suhu)
+        label_hasil.config(text=f"Hasil: Suhu {suhu}°C termasuk {hasil}")
+    except ValueError:
+        messagebox.showerror("Input Salah", "Masukkan suhu dalam angka bulat!")
+
+# Fungsi untuk menghapus input dan hasil
+def reset():
+    entry_suhu.delete(0, tk.END)
+    label_hasil.config(text="")
+
+# Fungsi untuk keluar dari aplikasi
+def keluar():
+    root.destroy()
+
+# Membuat jendela utama
+root = tk.Tk()
+root.title("Aplikasi Cek Suhu - SMK YPM 1 Taman")
+root.geometry("400x250")
+root.resizable(False, False)
+
+# Label judul
+label_judul = tk.Label(root, text="Cek Kategori Suhu", font=("Arial", 16, "bold"))
+label_judul.pack(pady=10)
+
+# Input suhu
+entry_suhu = tk.Entry(root, font=("Arial", 12), justify="center")
+entry_suhu.pack(pady=5)
+entry_suhu.insert(0, "")  # placeholder kosong
+
+# Tombol Cek
+tombol_cek = tk.Button(root, text="Cek Suhu", width=15, command=cek_suhu)
+tombol_cek.pack(pady=5)
+
+# Label hasil
+label_hasil = tk.Label(root, text="", font=("Arial", 12))
+label_hasil.pack(pady=5)
+
+# Tombol reset dan keluar
+frame_tombol = tk.Frame(root)
+frame_tombol.pack(pady=10)
+
+tombol_reset = tk.Button(frame_tombol, text="Coba Lagi", width=12, command=reset)
+tombol_reset.grid(row=0, column=0, padx=10)
+
+tombol_keluar = tk.Button(frame_tombol, text="Keluar", width=12, command=keluar)
+tombol_keluar.grid(row=0, column=1, padx=10)
+
+# Jalankan aplikasi
+root.mainloop()
