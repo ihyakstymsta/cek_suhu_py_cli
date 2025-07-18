@@ -1,0 +1,53 @@
+import tkinter as tk
+import requests
+
+# URL endpoint API Flowise
+API_URL = "http://localhost:3000/api/v1/prediction/7d137abd-feb6-4b59-954e-949c7bffd5ac"
+
+# Fungsi untuk mengirim pertanyaan ke chatbot
+def query_to_chatbot(question):
+    payload = {
+        "question": f"Assalamu'alaikum. {question}"
+    }
+    try:
+        response = requests.post(API_URL, json=payload)
+        return response.json().get("text", "Maaf, tidak ada jawaban.")
+    except Exception as e:
+        return f"Error: {e}"
+
+# Fungsi ketika tombol diklik
+def kirim():
+    user_text = entry.get()
+    if user_text.strip() == "":
+        return
+    chatbox.insert(tk.END, f"👤 Anda: {user_text}\n")
+    response = query_to_chatbot(user_text)
+    chatbox.insert(tk.END, f"🤖 Chatbot: {response}\n\n")
+    entry.delete(0, tk.END)
+
+# GUI Setup
+root = tk.Tk()
+root.title("Chatbot Kelompok 3 - SMK YPM 1 Taman")
+root.geometry("600x400")
+root.resizable(False, False)
+
+judul = tk.Label(root, text="💬 Chatbot Kelompok 3", font=("Helvetica", 16, "bold"))
+judul.pack(pady=10)
+
+chatbox = tk.Text(root, height=15, width=70, wrap=tk.WORD)
+chatbox.pack(padx=10, pady=5)
+
+frame_input = tk.Frame(root)
+frame_input.pack(pady=5)
+
+entry = tk.Entry(frame_input, width=50)
+entry.pack(side=tk.LEFT, padx=5)
+
+tombol_kirim = tk.Button(frame_input, text="Kirim", width=10, command=kirim)
+tombol_kirim.pack(side=tk.LEFT)
+
+# Fokus ke entry saat awal
+entry.focus()
+
+# Jalankan GUI
+root.mainloop()
